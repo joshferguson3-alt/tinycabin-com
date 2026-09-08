@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { CabinMark } from "@/components/cabin-mark";
+import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/guides", label: "Guides" },
@@ -21,6 +22,7 @@ export function SiteHeader() {
         <Link
           href="/"
           className="flex items-center gap-2.5 text-forest-900 no-underline"
+          onClick={() => setOpen(false)}
         >
           <CabinMark className="size-8 text-forest-800" />
           <span className="font-heading text-lg tracking-tight">Tiny Cabin</span>
@@ -36,23 +38,21 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Button nativeButton={false} render={<Link href="/#match" />} className="h-10 px-4">
+          <Link href="/#match" className={cn(buttonVariants(), "h-10 px-4 no-underline")}>
             Start a match
-          </Button>
+          </Link>
         </nav>
 
-        <Button
+        <button
           type="button"
-          variant="outline"
-          size="icon"
-          className="md:hidden"
+          className="inline-flex size-11 items-center justify-center rounded-lg border border-border bg-background text-forest-900 md:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((value) => !value)}
         >
-          {open ? <X /> : <Menu />}
+          {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
           <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-        </Button>
+        </button>
       </div>
 
       {open ? (
@@ -61,12 +61,12 @@ export function SiteHeader() {
           className="border-t border-forest-800/10 px-4 py-4 md:hidden"
           aria-label="Mobile"
         >
-          <div className="flex flex-col gap-3 text-base">
+          <div className="flex flex-col gap-1 text-base">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="py-1 text-forest-800"
+                className="rounded-md px-1 py-2 text-forest-800"
                 onClick={() => setOpen(false)}
               >
                 {link.label}

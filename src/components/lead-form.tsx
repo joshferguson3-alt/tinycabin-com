@@ -4,41 +4,41 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { budgetRanges, landStatuses, timelines } from "@/lib/lead";
+import { cn } from "@/lib/utils";
 
-const empty = {
-  name: "",
-  email: "",
-  phone: "",
-  location: "",
-  budget: "",
-  timeline: "",
-  landStatus: "",
-  notes: "",
-  company: "",
-};
-
-type FormState = typeof empty;
+const selectClassName = cn(
+  "h-11 w-full min-w-0 rounded-lg border border-input bg-cream-50 px-2.5 text-base outline-none",
+  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+  "disabled:cursor-not-allowed disabled:opacity-50",
+);
 
 export function LeadForm({ compact = false }: { compact?: boolean }) {
-  const [values, setValues] = useState<FormState>(empty);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "preview" | "error">("idle");
   const [message, setMessage] = useState("");
 
-  function update<K extends keyof FormState>(key: K, value: FormState[K]) {
-    setValues((current) => ({ ...current, [key]: value }));
-  }
-
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    if (String(data.get("company") ?? "").trim()) {
+      setStatus("success");
+      return;
+    }
+
+    const payload = {
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      phone: String(data.get("phone") ?? ""),
+      location: String(data.get("location") ?? ""),
+      budget: String(data.get("budget") ?? ""),
+      timeline: String(data.get("timeline") ?? ""),
+      landStatus: String(data.get("landStatus") ?? ""),
+      notes: String(data.get("notes") ?? ""),
+    };
+
     setStatus("submitting");
     setMessage("");
 
@@ -46,9 +46,9 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify(payload),
       });
-      const payload = (await response.json()) as {
+      const result = (await response.json()) as {
         error?: string;
         preview?: boolean;
         message?: string;
@@ -56,21 +56,21 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
 
       if (!response.ok) {
         setStatus("error");
-        setMessage(payload.error || "Something went wrong. Please try again.");
+        setMessage(result.error || "Something went wrong. Please try again.");
         return;
       }
 
-      if (payload.preview) {
+      if (result.preview) {
         setStatus("preview");
         setMessage(
-          payload.message ||
+          result.message ||
             "Preview mode: the form works, but no destination is configured yet.",
         );
         return;
       }
 
+      form.reset();
       setStatus("success");
-      setValues(empty);
     } catch {
       setStatus("error");
       setMessage("Network error. Check your connection and try again.");
@@ -101,8 +101,6 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             name="name"
             autoComplete="name"
             required
-            value={values.name}
-            onChange={(event) => update("name", event.target.value)}
             className="h-11 bg-cream-50 text-base"
           />
         </Field>
@@ -113,8 +111,6 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             type="email"
             autoComplete="email"
             required
-            value={values.email}
-            onChange={(event) => update("email", event.target.value)}
             className="h-11 bg-cream-50 text-base"
           />
         </Field>
@@ -127,8 +123,6 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             name="phone"
             type="tel"
             autoComplete="tel"
-            value={values.phone}
-            onChange={(event) => update("phone", event.target.value)}
             className="h-11 bg-cream-50 text-base"
           />
         </Field>
@@ -139,83 +133,66 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             autoComplete="postal-code"
             required
             placeholder="e.g. 98826 or WA"
-            value={values.location}
-            onChange={(event) => update("location", event.target.value)}
             className="h-11 bg-cream-50 text-base"
           />
         </Field>
       </div>
 
       <Field label="Budget range" htmlFor="lead-budget">
-        <Select
+        <select
+          id="lead-budget"
+          name="budget"
           required
-          items={[...budgetRanges]}
-          value={values.budget || null}
-          onValueChange={(value) => update("budget", value ?? "")}
+          defaultValue=""
+          className={selectClassName}
         >
-          <SelectTrigger
-            id="lead-budget"
-            className="h-11 w-full bg-cream-50 text-base"
-            aria-label="Budget range"
-          >
-            <SelectValue placeholder="Select a range" />
-          </SelectTrigger>
-          <SelectContent align="start" alignItemWithTrigger={false} className="w-[var(--anchor-width)]">
-            {budgetRanges.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          <option value="" disabled>
+            Select a range
+          </option>
+          {budgetRanges.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </Field>
 
       <Field label="Timeline" htmlFor="lead-timeline">
-        <Select
+        <select
+          id="lead-timeline"
+          name="timeline"
           required
-          items={[...timelines]}
-          value={values.timeline || null}
-          onValueChange={(value) => update("timeline", value ?? "")}
+          defaultValue=""
+          className={selectClassName}
         >
-          <SelectTrigger
-            id="lead-timeline"
-            className="h-11 w-full bg-cream-50 text-base"
-            aria-label="Timeline"
-          >
-            <SelectValue placeholder="When do you want to build?" />
-          </SelectTrigger>
-          <SelectContent align="start" alignItemWithTrigger={false}>
-            {timelines.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          <option value="" disabled>
+            When do you want to build?
+          </option>
+          {timelines.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </Field>
 
       <Field label="Land status" htmlFor="lead-land">
-        <Select
+        <select
+          id="lead-land"
+          name="landStatus"
           required
-          items={[...landStatuses]}
-          value={values.landStatus || null}
-          onValueChange={(value) => update("landStatus", value ?? "")}
+          defaultValue=""
+          className={selectClassName}
         >
-          <SelectTrigger
-            id="lead-land"
-            className="h-11 w-full bg-cream-50 text-base"
-            aria-label="Land status"
-          >
-            <SelectValue placeholder="Have land, shopping, or not sure" />
-          </SelectTrigger>
-          <SelectContent align="start" alignItemWithTrigger={false}>
-            {landStatuses.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          <option value="" disabled>
+            Have land, shopping, or not sure
+          </option>
+          {landStatuses.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </Field>
 
       <Field label="Notes" htmlFor="lead-notes">
@@ -224,8 +201,6 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
           name="notes"
           rows={4}
           placeholder="Climate, off-grid, loft vs. one-level, snow load, or a kit you already like."
-          value={values.notes}
-          onChange={(event) => update("notes", event.target.value)}
           className="min-h-28 bg-cream-50 text-base"
         />
       </Field>
@@ -237,8 +212,6 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
           name="company"
           tabIndex={-1}
           autoComplete="off"
-          value={values.company}
-          onChange={(event) => update("company", event.target.value)}
         />
       </div>
 
