@@ -1,0 +1,179 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-heading);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-cream-50: #fbf7f0;
+  --color-cream-100: #f4efe6;
+  --color-cream-200: #e8dfd0;
+  --color-wood-600: #8b5a2b;
+  --color-forest-700: #3d5c4a;
+  --color-forest-800: #2c4a3a;
+  --color-forest-900: #1f3328;
+  --color-forest-950: #14241c;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: #f4efe6;
+  --foreground: #2a2118;
+  --card: #fbf7f0;
+  --card-foreground: #2a2118;
+  --popover: #fbf7f0;
+  --popover-foreground: #2a2118;
+  --primary: #234236;
+  --primary-foreground: #f6f1e7;
+  --secondary: #e8dfd0;
+  --secondary-foreground: #2a2118;
+  --muted: #ebe4d6;
+  --muted-foreground: #5c5348;
+  --accent: #d9cbb3;
+  --accent-foreground: #2a2118;
+  --destructive: #9b2c2c;
+  --border: #d4c8b4;
+  --input: #d4c8b4;
+  --ring: #3d5c4a;
+  --chart-1: #234236;
+  --chart-2: #8b5a2b;
+  --chart-3: #5c7a5e;
+  --chart-4: #c4844a;
+  --chart-5: #2a2118;
+  --radius: 0.7rem;
+  --sidebar: #fbf7f0;
+  --sidebar-foreground: #2a2118;
+  --sidebar-primary: #234236;
+  --sidebar-primary-foreground: #f6f1e7;
+  --sidebar-accent: #e8dfd0;
+  --sidebar-accent-foreground: #2a2118;
+  --sidebar-border: #d4c8b4;
+  --sidebar-ring: #3d5c4a;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  a {
+    @apply underline-offset-4;
+  }
+}
+
+@utility font-heading {
+  font-family: var(--font-heading), ui-serif, Georgia, serif;
+}
+
+.hero-grain {
+  background-color: #14241c;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 15% 10%, rgb(61 92 74 / 0.45), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 80%, rgb(139 90 43 / 0.18), transparent 50%),
+    linear-gradient(180deg, #1a2e24 0%, #14241c 100%);
+}
+
+.guide-prose {
+  @apply text-[1.05rem] leading-8 text-forest-950/90;
+}
+
+.guide-prose h2 {
+  @apply font-heading mt-11 mb-3 text-2xl tracking-tight text-forest-950;
+}
+
+.guide-prose h3 {
+  @apply font-heading mt-8 mb-2 text-xl tracking-tight text-forest-950;
+}
+
+.guide-prose p {
+  @apply mb-5;
+}
+
+.guide-prose ul,
+.guide-prose ol {
+  @apply mb-5 ml-5 space-y-2;
+}
+
+.guide-prose ul {
+  @apply list-disc;
+}
+
+.guide-prose ol {
+  @apply list-decimal;
+}
+
+.guide-prose li {
+  @apply pl-1;
+}
+
+.guide-prose strong {
+  @apply font-medium text-forest-950;
+}
+
+.guide-prose a {
+  @apply text-wood-600 underline;
+}
+
+.guide-prose table {
+  @apply mb-6 w-full text-left text-sm;
+}
+
+.guide-prose th {
+  @apply border-b border-forest-800/20 py-2 pr-3 font-medium;
+}
+
+.guide-prose td {
+  @apply border-b border-forest-800/10 py-2 pr-3 align-top;
+}
+
+.guide-prose aside {
+  @apply my-8 rounded-xl border border-forest-800/12 bg-cream-50 px-5 py-4 text-base leading-7;
+}

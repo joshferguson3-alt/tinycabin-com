@@ -1,0 +1,47 @@
+import type { ReactNode } from "react";
+import { GuideCta } from "@/components/guide-cta";
+import type { Guide } from "@/lib/guides";
+import { absoluteUrl, site } from "@/lib/site";
+
+export function GuideArticle({
+  guide,
+  children,
+}: {
+  guide: Guide;
+  children: ReactNode;
+}) {
+  const formatted = new Date(`${guide.updated}T00:00:00`).toLocaleDateString(
+    "en-US",
+    { month: "long", day: "numeric", year: "numeric" },
+  );
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.title,
+    description: guide.description,
+    dateModified: guide.updated,
+    author: { "@type": "Organization", name: site.name, url: site.url },
+    publisher: { "@type": "Organization", name: site.name, url: site.url },
+    mainEntityOfPage: absoluteUrl(`/guides/${guide.slug}`),
+  };
+
+  return (
+    <article className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <p className="text-xs font-medium tracking-[0.16em] text-forest-800/70 uppercase">
+        Guide
+      </p>
+      <h1 className="font-heading mt-3 text-4xl leading-tight tracking-tight text-balance text-forest-950 sm:text-5xl">
+        {guide.title}
+      </h1>
+      <p className="mt-4 text-lg leading-8 text-forest-800/80">{guide.excerpt}</p>
+      <p className="mt-3 text-sm text-muted-foreground">Updated {formatted}</p>
+      <div className="guide-prose mt-10">{children}</div>
+      <GuideCta />
+    </article>
+  );
+}
