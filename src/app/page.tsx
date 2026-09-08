@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Compass, LandPlot, ListChecks, Shield } from "lucide-react";
 import { LeadForm } from "@/components/lead-form";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { guides } from "@/lib/guides";
+import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 
 const steps = [
@@ -46,7 +47,12 @@ const trust = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ lead?: string; msg?: string }>;
+}) {
+  const { lead, msg } = await searchParams;
   return (
     <>
       <section className="hero-grain text-cream-50">
@@ -62,21 +68,24 @@ export default function HomePage() {
               {site.description}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button
-                nativeButton={false}
-                render={<Link href="#match" />}
-                className="h-12 bg-cream-50 px-6 text-base text-forest-950 hover:bg-cream-100"
+              <Link
+                href="#match"
+                className={cn(
+                  buttonVariants(),
+                  "h-12 bg-cream-50 px-6 text-base text-forest-950 no-underline hover:bg-cream-100",
+                )}
               >
                 Get a shortlist
-              </Button>
-              <Button
-                nativeButton={false}
-                variant="outline"
-                render={<Link href="/guides" />}
-                className="h-12 border-cream-100/25 bg-transparent px-6 text-base text-cream-50 hover:bg-cream-100/10 hover:text-cream-50"
+              </Link>
+              <Link
+                href="/guides"
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "h-12 border-cream-100/25 bg-transparent px-6 text-base text-cream-50 no-underline hover:bg-cream-100/10 hover:text-cream-50",
+                )}
               >
                 Read the guides
-              </Button>
+              </Link>
             </div>
           </div>
           <p className="max-w-sm text-sm leading-6 text-cream-100/65 lg:justify-self-end">
@@ -177,7 +186,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="rounded-2xl border border-forest-800/12 bg-card p-5 shadow-sm sm:p-8">
-            <LeadForm />
+            <LeadForm result={lead} message={msg} />
           </div>
         </div>
       </section>

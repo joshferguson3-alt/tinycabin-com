@@ -1,7 +1,5 @@
-"use client";
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { submitLead } from "@/app/actions/lead";
+import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,75 +7,21 @@ import { budgetRanges, landStatuses, timelines } from "@/lib/lead";
 import { cn } from "@/lib/utils";
 
 const selectClassName = cn(
-  "h-11 w-full min-w-0 rounded-lg border border-input bg-cream-50 px-2.5 text-base outline-none",
+  "h-11 w-full min-w-0 rounded-lg border border-input bg-cream-50 px-2.5 text-base text-forest-950 outline-none",
   "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
   "disabled:cursor-not-allowed disabled:opacity-50",
 );
 
-export function LeadForm({ compact = false }: { compact?: boolean }) {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "preview" | "error">("idle");
-  const [message, setMessage] = useState("");
-
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
-
-    if (String(data.get("company") ?? "").trim()) {
-      setStatus("success");
-      return;
-    }
-
-    const payload = {
-      name: String(data.get("name") ?? ""),
-      email: String(data.get("email") ?? ""),
-      phone: String(data.get("phone") ?? ""),
-      location: String(data.get("location") ?? ""),
-      budget: String(data.get("budget") ?? ""),
-      timeline: String(data.get("timeline") ?? ""),
-      landStatus: String(data.get("landStatus") ?? ""),
-      notes: String(data.get("notes") ?? ""),
-    };
-
-    setStatus("submitting");
-    setMessage("");
-
-    try {
-      const response = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const result = (await response.json()) as {
-        error?: string;
-        preview?: boolean;
-        message?: string;
-      };
-
-      if (!response.ok) {
-        setStatus("error");
-        setMessage(result.error || "Something went wrong. Please try again.");
-        return;
-      }
-
-      if (result.preview) {
-        setStatus("preview");
-        setMessage(
-          result.message ||
-            "Preview mode: the form works, but no destination is configured yet.",
-        );
-        return;
-      }
-
-      form.reset();
-      setStatus("success");
-    } catch {
-      setStatus("error");
-      setMessage("Network error. Check your connection and try again.");
-    }
-  }
-
-  if (status === "success") {
+export function LeadForm({
+  compact = false,
+  result,
+  message,
+}: {
+  compact?: boolean;
+  result?: string;
+  message?: string;
+}) {
+  if (result === "sent") {
     return (
       <div
         className="rounded-xl border border-forest-800/15 bg-cream-50 px-5 py-8"
@@ -93,7 +37,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-4" noValidate>
+    <form action={submitLead} className="grid gap-4">
       <div className={compact ? "grid gap-4" : "grid gap-4 sm:grid-cols-2"}>
         <Field label="Name" htmlFor="lead-name">
           <Input
@@ -101,7 +45,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             name="name"
             autoComplete="name"
             required
-            className="h-11 bg-cream-50 text-base"
+            className="h-11 bg-cream-50 text-base text-forest-950"
           />
         </Field>
         <Field label="Email" htmlFor="lead-email">
@@ -111,7 +55,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             type="email"
             autoComplete="email"
             required
-            className="h-11 bg-cream-50 text-base"
+            className="h-11 bg-cream-50 text-base text-forest-950"
           />
         </Field>
       </div>
@@ -123,7 +67,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             name="phone"
             type="tel"
             autoComplete="tel"
-            className="h-11 bg-cream-50 text-base"
+            className="h-11 bg-cream-50 text-base text-forest-950"
           />
         </Field>
         <Field label="ZIP or state" htmlFor="lead-location">
@@ -133,7 +77,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             autoComplete="postal-code"
             required
             placeholder="e.g. 98826 or WA"
-            className="h-11 bg-cream-50 text-base"
+            className="h-11 bg-cream-50 text-base text-forest-950"
           />
         </Field>
       </div>
@@ -201,7 +145,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
           name="notes"
           rows={4}
           placeholder="Climate, off-grid, loft vs. one-level, snow load, or a kit you already like."
-          className="min-h-28 bg-cream-50 text-base"
+          className="min-h-28 bg-cream-50 text-base text-forest-950"
         />
       </Field>
 
@@ -215,26 +159,22 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
         />
       </div>
 
-      {status === "error" || status === "preview" ? (
+      {result === "error" || result === "preview" ? (
         <p
           role="status"
           className={
-            status === "preview"
+            result === "preview"
               ? "text-sm leading-6 text-forest-800"
               : "text-sm leading-6 text-destructive"
           }
         >
-          {message}
+          {result === "preview"
+            ? "Preview mode: the form works, but no Formspree, webhook, or Resend destination is set yet. The lead was logged on the server only."
+            : message || "Something went wrong. Please try again."}
         </p>
       ) : null}
 
-      <Button
-        type="submit"
-        disabled={status === "submitting"}
-        className="h-12 px-5 text-base"
-      >
-        {status === "submitting" ? "Sending…" : "Get a shortlist"}
-      </Button>
+      <SubmitButton />
       <p className="text-xs leading-5 text-muted-foreground">
         Free for buyers. We do not sell your information. See our{" "}
         <a href="/privacy" className="underline underline-offset-2">

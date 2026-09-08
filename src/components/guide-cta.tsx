@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function GuideCta() {
   return (
@@ -14,13 +15,15 @@ export function GuideCta() {
         Send budget, timeline, and land status. We reply with a shortlist — not a
         catalog dump.
       </p>
-      <Button
-        nativeButton={false}
-        render={<Link href="/#match" />}
-        className="mt-6 h-11 bg-cream-50 px-5 text-forest-950 hover:bg-cream-100"
+      <Link
+        href="/#match"
+        className={cn(
+          buttonVariants(),
+          "mt-6 h-11 bg-cream-50 px-5 text-forest-950 no-underline hover:bg-cream-100",
+        )}
       >
         Get matched
-      </Button>
+      </Link>
     </aside>
   );
 }

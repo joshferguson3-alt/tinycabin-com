@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function NotFound() {
   return (
@@ -14,17 +15,15 @@ export default function NotFound() {
         The guides and the match form are still here. This URL is not.
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
-        <Button nativeButton={false} render={<Link href="/" />} className="h-11 px-4">
+        <Link href="/" className={cn(buttonVariants(), "h-11 px-4 no-underline")}>
           Home
-        </Button>
-        <Button
-          nativeButton={false}
-          variant="outline"
-          render={<Link href="/guides" />}
-          className="h-11 px-4"
+        </Link>
+        <Link
+          href="/guides"
+          className={cn(buttonVariants({ variant: "outline" }), "h-11 px-4 no-underline")}
         >
           Guides
-        </Button>
+        </Link>
       </div>
     </div>
   );

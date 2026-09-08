@@ -37,7 +37,7 @@ SEO: unique titles/descriptions, Open Graph tags, generated `sitemap.xml` and `r
 
 ## Lead form destination
 
-The browser posts JSON to `POST /api/lead`. The route delivers the lead using **the first configured option**:
+The match form posts through a Next.js server action (`submitLead`). `POST /api/lead` is also available for JSON clients. Delivery uses **the first configured option**:
 
 1. **Formspree** — set `FORMSPREE_FORM_ID` (the `xxxxx` in `https://formspree.io/f/xxxxx`).
 2. **Webhook** — set `LEAD_WEBHOOK_URL`. Optional `LEAD_WEBHOOK_SECRET` is sent as `Authorization: Bearer …`.
