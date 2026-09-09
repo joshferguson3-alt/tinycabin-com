@@ -1,0 +1,10 @@
+# Next.js 16 on Netlify. The OpenNext adapter (@netlify/plugin-nextjs)
+# is injected automatically — do not pin it in package.json.
+# Docs: https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"

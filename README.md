@@ -37,8 +37,8 @@ SEO: unique titles/descriptions, Open Graph tags, generated `sitemap.xml` and `r
 
 ## Lead form and deploy
 
-Exact env var names, example shapes, Vercel ↔ Origin click path, and the GoDaddy A/CNAME checklist: **[DEPLOY.md](./DEPLOY.md)**.
+Exact env var names, Netlify publish steps (CLI or GitHub bridge), and the GoDaddy A/CNAME checklist: **[DEPLOY.md](./DEPLOY.md)**.
 
-Origin stays the source of truth. Do not mirror to GitHub solely for Vercel.
+Origin stays the working remote. Hosting is Netlify (no Vercel Pro).
 
 Honeypot field: `company`. If filled, the submit is dropped and treated as success.
