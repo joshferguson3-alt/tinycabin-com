@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Compass, LandPlot, ListChecks, Shield } from "lucide-react";
-import { CreditedImage } from "@/components/credited-image";
+import { CreditedImage, PhotoCredit } from "@/components/credited-image";
 import { GuideCard } from "@/components/guide-card";
 import { LeadForm } from "@/components/lead-form";
 import { buttonVariants } from "@/components/ui/button";
@@ -72,7 +72,7 @@ export default async function HomePage({
           photo={photos.heroForest}
           fill
           priority
-          credit="overlay"
+          credit="none"
           className="absolute inset-0"
           imgClassName="object-cover object-[50%_40%]"
           sizes="100vw"
@@ -81,7 +81,10 @@ export default async function HomePage({
           className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/55 to-forest-950/25"
           aria-hidden
         />
-        <div className="relative mx-auto grid min-h-[78vh] w-full max-w-6xl content-end gap-10 px-4 py-16 sm:min-h-[86vh] sm:px-6 sm:py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+        <p className="absolute top-[4.75rem] right-4 z-20 rounded bg-forest-950/70 px-2 py-1 text-[11px] leading-none text-cream-50/90 sm:right-6">
+          <PhotoCredit photo={photos.heroForest} />
+        </p>
+        <div className="relative z-20 mx-auto grid min-h-[78vh] w-full max-w-6xl content-end gap-10 px-4 py-16 sm:min-h-[86vh] sm:px-6 sm:py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <div>
             <p className="text-xs font-medium tracking-[0.18em] text-cream-100/75 uppercase">
               {site.domain}

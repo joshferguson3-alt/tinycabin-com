@@ -43,7 +43,8 @@ export function GuideArticle({
       <p className="mt-3 text-sm text-muted-foreground">Updated {formatted}</p>
       <CreditedImage
         photo={guide.photo}
-        className="mt-8 aspect-[16/9] rounded-2xl"
+        className="mt-8"
+        frameClassName="aspect-[16/9] rounded-2xl"
         sizes="(min-width: 768px) 48rem, 100vw"
         priority
         credit="below"
