@@ -60,7 +60,7 @@ export function CreditedImage({
           : { width: photo.width, height: photo.height })}
         sizes={sizes}
         priority={priority}
-        quality={priority ? 80 : 72}
+        quality={priority ? 80 : 75}
         className={cn("object-cover", fill ? "object-cover" : "h-full w-full", imgClassName)}
       />
       {credit === "overlay" ? (
