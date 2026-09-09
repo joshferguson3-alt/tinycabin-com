@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { GuideCard } from "@/components/guide-card";
 import { guides } from "@/lib/guides";
 import { absoluteUrl } from "@/lib/site";
 
@@ -33,22 +33,7 @@ export default function GuidesPage() {
       <ul className="mt-12 grid gap-5 md:grid-cols-2">
         {guides.map((guide) => (
           <li key={guide.slug}>
-            <article className="flex h-full flex-col rounded-2xl border border-forest-800/10 bg-cream-50 p-6">
-              <h2 className="font-heading text-2xl tracking-tight text-forest-950">
-                <Link href={`/guides/${guide.slug}`} className="no-underline hover:underline">
-                  {guide.title}
-                </Link>
-              </h2>
-              <p className="mt-3 flex-1 text-sm leading-6 text-forest-800/80">
-                {guide.excerpt}
-              </p>
-              <Link
-                href={`/guides/${guide.slug}`}
-                className="mt-5 text-sm text-wood-600 underline"
-              >
-                Read the guide
-              </Link>
-            </article>
+            <GuideCard guide={guide} heading="h2" />
           </li>
         ))}
       </ul>

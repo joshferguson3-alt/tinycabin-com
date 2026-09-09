@@ -53,7 +53,16 @@ export function SiteFooter() {
       <div className="border-t border-cream-100/10">
         <p className="mx-auto max-w-6xl px-4 py-4 text-xs text-cream-100/50 sm:px-6">
           © {new Date().getFullYear()} {site.name}. Guides are educational, not
-          legal or construction advice.
+          legal or construction advice. Site photographs are real places from{" "}
+          <a
+            href="https://unsplash.com/?utm_source=tinycabin&utm_medium=referral"
+            className="underline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Unsplash
+          </a>
+          ; photographers are credited on each image.
         </p>
       </div>
     </footer>

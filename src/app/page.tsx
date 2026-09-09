@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { Compass, LandPlot, ListChecks, Shield } from "lucide-react";
+import { CreditedImage } from "@/components/credited-image";
+import { GuideCard } from "@/components/guide-card";
 import { LeadForm } from "@/components/lead-form";
 import { buttonVariants } from "@/components/ui/button";
 import { guides } from "@/lib/guides";
-import { cn } from "@/lib/utils";
+import { galleryPhotos, photos } from "@/lib/photos";
 import { site } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 const steps = [
   {
@@ -47,6 +50,15 @@ const trust = [
   },
 ];
 
+const galleryLayout = [
+  "md:col-span-4 md:row-span-2 aspect-[3/4] md:aspect-auto md:min-h-[34rem]",
+  "md:col-span-8 aspect-[16/10]",
+  "md:col-span-4 aspect-[4/5]",
+  "md:col-span-4 aspect-[4/5]",
+  "md:col-span-5 aspect-[16/10]",
+  "md:col-span-7 aspect-[16/9]",
+];
+
 export default async function HomePage({
   searchParams,
 }: {
@@ -55,16 +67,29 @@ export default async function HomePage({
   const { lead, msg } = await searchParams;
   return (
     <>
-      <section className="hero-grain text-cream-50">
-        <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+      <section className="relative isolate min-h-[78vh] overflow-hidden text-cream-50 sm:min-h-[86vh]">
+        <CreditedImage
+          photo={photos.heroForest}
+          fill
+          priority
+          credit="overlay"
+          className="absolute inset-0"
+          imgClassName="object-cover object-[50%_40%]"
+          sizes="100vw"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/55 to-forest-950/25"
+          aria-hidden
+        />
+        <div className="relative mx-auto grid min-h-[78vh] w-full max-w-6xl content-end gap-10 px-4 py-16 sm:min-h-[86vh] sm:px-6 sm:py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <div>
-            <p className="text-xs font-medium tracking-[0.18em] text-cream-100/65 uppercase">
+            <p className="text-xs font-medium tracking-[0.18em] text-cream-100/75 uppercase">
               {site.domain}
             </p>
             <h1 className="font-heading mt-4 max-w-3xl text-4xl leading-[1.1] tracking-tight text-balance sm:text-6xl">
               Find the right tiny cabin kit — or the builder who can set it on your land.
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-cream-100/80">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-cream-100/85">
               {site.description}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -88,7 +113,7 @@ export default async function HomePage({
               </Link>
             </div>
           </div>
-          <p className="max-w-sm text-sm leading-6 text-cream-100/65 lg:justify-self-end">
+          <p className="max-w-sm text-sm leading-6 text-cream-100/70 lg:justify-self-end">
             Soft launch: matching is manual and regional. If we don’t have a fit
             yet, we say so instead of padding a list.
           </p>
@@ -118,7 +143,37 @@ export default async function HomePage({
         </ol>
       </section>
 
-      <section className="border-y border-forest-800/10 bg-cream-50/70">
+      <section id="places" className="border-y border-forest-800/10 bg-cream-50/70">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <p className="text-xs font-medium tracking-[0.16em] text-forest-800/70 uppercase">
+            Places like these
+          </p>
+          <h2 className="font-heading mt-2 max-w-2xl text-3xl tracking-tight text-forest-950 sm:text-4xl">
+            Real cabins. Real places.
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-forest-800/80">
+            Alpine huts, forest cabins, and cozy interiors — licensed photographs
+            of actual places, not renderings. One of them is a cabin near
+            Zermatt, Switzerland.
+          </p>
+          <div className="mt-10 grid gap-3 md:grid-cols-12">
+            {galleryPhotos.map((photo, index) => (
+              <CreditedImage
+                key={photo.src}
+                photo={photo}
+                className={cn("aspect-[4/3] rounded-2xl", galleryLayout[index])}
+                sizes={
+                  index === 1 || index === 5
+                    ? "(min-width: 768px) 50vw, 100vw"
+                    : "(min-width: 768px) 33vw, 100vw"
+                }
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-forest-800/10 bg-cream-50/70">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <h2 className="font-heading text-3xl tracking-tight text-forest-950">
             What you can trust on this site
@@ -151,20 +206,10 @@ export default async function HomePage({
             All guides
           </Link>
         </div>
-        <ul className="mt-8 grid gap-4 md:grid-cols-2">
+        <ul className="mt-8 grid gap-5 md:grid-cols-2">
           {guides.map((guide) => (
             <li key={guide.slug}>
-              <Link
-                href={`/guides/${guide.slug}`}
-                className="block h-full rounded-2xl border border-forest-800/10 bg-cream-50 p-6 no-underline transition-colors hover:border-forest-800/25"
-              >
-                <h3 className="font-heading text-xl tracking-tight text-forest-950">
-                  {guide.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-forest-800/80">
-                  {guide.excerpt}
-                </p>
-              </Link>
+              <GuideCard guide={guide} />
             </li>
           ))}
         </ul>
@@ -184,6 +229,11 @@ export default async function HomePage({
               to start. Phone and notes help if you already know the climate or a
               kit you like.
             </p>
+            <CreditedImage
+              photo={photos.interiorStove}
+              className="mt-8 hidden aspect-[16/10] rounded-2xl lg:block"
+              sizes="(min-width: 1024px) 28rem, 100vw"
+            />
           </div>
           <div className="rounded-2xl border border-forest-800/12 bg-card p-5 shadow-sm sm:p-8">
             <LeadForm result={lead} message={msg} />

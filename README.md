@@ -25,7 +25,7 @@ npm start -- --port 43147
 
 | Path | Purpose |
 | --- | --- |
-| `/` | Hero, how it works, trust notes, match form |
+| `/` | Photo hero, how it works, cabin gallery, trust notes, match form |
 | `/guides` | Guide hub |
 | `/guides/tiny-cabin-kit-cost` | Kit vs. project cost |
 | `/guides/tiny-cabin-vs-tiny-home` | Cabin vs. THOW vs. ADU |
@@ -42,3 +42,21 @@ Exact env var names, Netlify publish steps (CLI or GitHub bridge), and the GoDad
 Origin stays the working remote. Hosting is Netlify (no Vercel Pro).
 
 Honeypot field: `company`. If filled, the submit is dropped and treated as success.
+
+## Photography
+
+Marketing photos are **real places** only — Unsplash-licensed JPEGs in `public/photos/`. They are served through `next/image` (AVIF/WebP, sized srcset). The homepage hero uses `priority` for LCP. Photographers are credited on each image (Unsplash License) and in the footer.
+
+Josh’s Switzerland trip files were not on this filesystem; a licensed Zermatt cabin photo (Ryan Klaus) stands in until those assets are added.
+
+| File | Photographer | Unsplash |
+| --- | --- | --- |
+| `hero-forest.jpg` | Olivier Guillard | [FKJgBUDoVC0](https://unsplash.com/photos/FKJgBUDoVC0) |
+| `zermatt-cabin.jpg` | Ryan Klaus | [VQVmkIQojVk](https://unsplash.com/photos/VQVmkIQojVk) |
+| `alpine-lake.jpg` | Luca Bravo | [zAjdgNXsMeg](https://unsplash.com/photos/zAjdgNXsMeg) |
+| `snow-cabin.jpg` | Ian Keefe | [OgcJIKRnRC8](https://unsplash.com/photos/OgcJIKRnRC8) |
+| `modern-cabin.jpg` | Lili Kovac | [BSQq5dRT_KU](https://unsplash.com/photos/BSQq5dRT_KU) |
+| `interior-stove.jpg` | Clay Banks | [79yk4XalXCM](https://unsplash.com/photos/79yk4XalXCM) |
+| `snowy-hut.jpg` | Krisztián Korhetz | [dB_OZdHyUws](https://unsplash.com/photos/dB_OZdHyUws) |
+| `woods-cabin.jpg` | Björn Grochla | [jXJEnwB1C5Q](https://unsplash.com/photos/jXJEnwB1C5Q) |
+| `interior-aframe.jpg` | Clay Banks | [3uuNKtEK8-g](https://unsplash.com/photos/3uuNKtEK8-g) |

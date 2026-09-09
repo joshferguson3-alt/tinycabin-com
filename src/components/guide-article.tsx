@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { CreditedImage } from "@/components/credited-image";
 import { GuideCta } from "@/components/guide-cta";
 import type { Guide } from "@/lib/guides";
 import { absoluteUrl, site } from "@/lib/site";
@@ -40,6 +41,13 @@ export function GuideArticle({
       </h1>
       <p className="mt-4 text-lg leading-8 text-forest-800/80">{guide.excerpt}</p>
       <p className="mt-3 text-sm text-muted-foreground">Updated {formatted}</p>
+      <CreditedImage
+        photo={guide.photo}
+        className="mt-8 aspect-[16/9] rounded-2xl"
+        sizes="(min-width: 768px) 48rem, 100vw"
+        priority
+        credit="below"
+      />
       <div className="guide-prose mt-10">{children}</div>
       <GuideCta />
     </article>
