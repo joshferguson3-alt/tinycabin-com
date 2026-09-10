@@ -21,7 +21,7 @@ export default function BestTinyCabinKitsPage() {
   return (
     <GuideArticle
       guide={guide}
-      partners={["texasTinyHomesPlans", "jamaicaCottageShop"]}
+      partners={["texasTinyHomesPlans", "tinyHomeBuilders", "jamaicaCottageShop"]}
     >
       <p>
         Search results for “best tiny cabin kits” are usually a stack of
