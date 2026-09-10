@@ -1,14 +1,19 @@
 import type { ReactNode } from "react";
 import { CreditedImage } from "@/components/credited-image";
 import { GuideCta } from "@/components/guide-cta";
+import { RecommendedNextSteps } from "@/components/recommended-next-steps";
+import type { AffiliateId } from "@/lib/affiliates";
 import type { Guide } from "@/lib/guides";
 import { absoluteUrl, site } from "@/lib/site";
 
 export function GuideArticle({
   guide,
+  partners,
   children,
 }: {
   guide: Guide;
+  /** Contextual partner slots; cards render only when a URL is configured. */
+  partners?: readonly AffiliateId[];
   children: ReactNode;
 }) {
   const formatted = new Date(`${guide.updated}T00:00:00`).toLocaleDateString(
@@ -50,6 +55,7 @@ export function GuideArticle({
         credit="below"
       />
       <div className="guide-prose mt-10">{children}</div>
+      {partners ? <RecommendedNextSteps partners={partners} /> : null}
       <GuideCta />
     </article>
   );

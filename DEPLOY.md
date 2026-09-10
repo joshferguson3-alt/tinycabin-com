@@ -109,6 +109,19 @@ Set **the first matching option**. Leave the others empty.
 
 On Netlify: **Site configuration → Environment variables** (Production + Preview if you want test leads on deploy previews). Locally: copy `.env.example` to `.env.local`.
 
+### Affiliate / partner placeholders (optional)
+
+Used in `src/lib/affiliates.ts`. Leave empty until Josh pastes an approved tracking URL. Empty or `#` hides that partner card. Set on Netlify and rebuild (static pages read these at build time).
+
+| Env var | Partner card | Example |
+| --- | --- | --- |
+| `AFFILIATE_TEXAS_TINY_HOMES` | Texas Tiny Homes plans | `https://…` tracking link |
+| `AFFILIATE_JAMAICA_COTTAGE_SHOP` | Jamaica Cottage Shop | `https://…` tracking link |
+| `AFFILIATE_COMPO_CLOSET` | CompoCloset | `https://…` tracking link |
+| `AFFILIATE_AMAZON_ASSOCIATES` | Footer Amazon Associates line only | any non-empty flag, e.g. `1` |
+
+Do not invent rankings. Cards only render when the URL is configured.
+
 **Not env vars (edit code if needed):**
 
 | Value | File | Current |
