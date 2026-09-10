@@ -7,6 +7,7 @@
  *
  * Env vars (set on Netlify, then rebuild) win over the in-file placeholder:
  *   AFFILIATE_TEXAS_TINY_HOMES
+ *   AFFILIATE_TINY_HOME_BUILDERS
  *   AFFILIATE_JAMAICA_COTTAGE_SHOP
  *   AFFILIATE_COMPO_CLOSET
  *   AFFILIATE_AMAZON_ASSOCIATES  — any non-empty value shows the Amazon line
@@ -14,6 +15,7 @@
 
 export type AffiliateId =
   | "texasTinyHomesPlans"
+  | "tinyHomeBuilders"
   | "jamaicaCottageShop"
   | "compoCloset";
 
@@ -51,6 +53,15 @@ export const affiliates = {
     href: trackingUrl("AFFILIATE_TEXAS_TINY_HOMES", ""),
     blurb:
       "Plan sets for small cabins. Useful when you want drawings before you commit to a crate — not a substitute for a local permit conversation.",
+  },
+  // Cabin / tiny-house plan sets — not a kit ranking.
+  tinyHomeBuilders: {
+    id: "tinyHomeBuilders",
+    name: "Tiny Home Builders plans",
+    category: "plans",
+    href: trackingUrl("AFFILIATE_TINY_HOME_BUILDERS", ""),
+    blurb:
+      "Plan sets for tiny houses and small cabins. Another place to look at drawings before you buy a kit or hire a builder — not a ranking, and not a permit.",
   },
   // Kit company slot. Shown as a partner to request a packing list from, never as “#1”.
   jamaicaCottageShop: {
