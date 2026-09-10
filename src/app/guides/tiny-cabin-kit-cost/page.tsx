@@ -21,7 +21,7 @@ export default function TinyCabinKitCostPage() {
   return (
     <GuideArticle
       guide={guide}
-      partners={["texasTinyHomesPlans", "tinyHomeBuilders", "compoCloset"]}
+      partners={["texasTinyHomesPlans", "tinyHomeBuilders", "tinyProject", "compoCloset"]}
     >
       <p>
         Most people google “tiny cabin kit cost” and get a single number: the

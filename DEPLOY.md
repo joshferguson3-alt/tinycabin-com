@@ -117,6 +117,7 @@ Used in `src/lib/affiliates.ts`. Leave empty until Josh pastes an approved track
 | --- | --- | --- |
 | `AFFILIATE_TEXAS_TINY_HOMES` | Texas Tiny Homes plans | `https://…` tracking link |
 | `AFFILIATE_TINY_HOME_BUILDERS` | Tiny Home Builders plans | `https://…` tracking link |
+| `AFFILIATE_TINY_PROJECT` | The Tiny Project plans | `https://…` tracking link |
 | `AFFILIATE_JAMAICA_COTTAGE_SHOP` | Jamaica Cottage Shop | `https://…` tracking link |
 | `AFFILIATE_COMPO_CLOSET` | CompoCloset | `https://…` tracking link |
 | `AFFILIATE_AMAZON_ASSOCIATES` | Footer Amazon Associates line only | any non-empty flag, e.g. `1` |
