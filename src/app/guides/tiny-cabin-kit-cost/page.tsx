@@ -19,7 +19,10 @@ export const metadata: Metadata = {
 
 export default function TinyCabinKitCostPage() {
   return (
-    <GuideArticle guide={guide}>
+    <GuideArticle
+      guide={guide}
+      partners={["texasTinyHomesPlans", "compoCloset"]}
+    >
       <p>
         Most people google “tiny cabin kit cost” and get a single number: the
         manufacturer’s crate price. That number is real, and it is also the

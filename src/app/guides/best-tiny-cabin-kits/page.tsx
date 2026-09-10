@@ -19,7 +19,10 @@ export const metadata: Metadata = {
 
 export default function BestTinyCabinKitsPage() {
   return (
-    <GuideArticle guide={guide}>
+    <GuideArticle
+      guide={guide}
+      partners={["texasTinyHomesPlans", "jamaicaCottageShop"]}
+    >
       <p>
         Search results for “best tiny cabin kits” are usually a stack of
         numbered lists with the same five logos in a different order. We will
@@ -120,12 +123,12 @@ export default function BestTinyCabinKitsPage() {
       </ul>
 
       <aside>
-        <strong>Kit partners (placeholder).</strong> We do not publish paid
-        “#1 kit” lists. If we add affiliate or partner links later, they will be
-        labeled as paid relationships and will not be ranked as editorial
-        awards. Manufacturers and builders who want to be in the match pool can
-        write <a href="mailto:hello@tinycabin.com">hello@tinycabin.com</a> with
-        a spec sheet, delivery map, and what’s excluded from the kit price.
+        <strong>No paid “#1 kit” lists.</strong> If a partner link appears in
+        the next-steps section below, it is a labeled paid relationship — not an
+        editorial award. Manufacturers and builders who want to be in the match
+        pool can write{" "}
+        <a href="mailto:hello@tinycabin.com">hello@tinycabin.com</a> with a spec
+        sheet, delivery map, and what’s excluded from the kit price.
       </aside>
 
       <h2>After you shortlist two or three</h2>

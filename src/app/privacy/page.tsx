@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <h1 className="font-heading mt-3 text-4xl tracking-tight text-forest-950">
         Privacy policy
       </h1>
-      <p className="mt-3 text-sm text-muted-foreground">Last updated September 8, 2026</p>
+      <p className="mt-3 text-sm text-muted-foreground">Last updated September 10, 2026</p>
 
       <div className="guide-prose mt-10">
         <p>
@@ -79,12 +79,27 @@ export default function PrivacyPage() {
           or abuse of the form.
         </p>
 
+        <h2>Affiliate links</h2>
+        <p>
+          Some outbound links may be affiliate or partner links. If you click
+          one and later buy from that company, we may earn a commission at no
+          extra cost to you. That is a paid relationship with the merchant or
+          their network — not a ranking, and not a sale of your inquiry.
+        </p>
+        <p>
+          We do not send your match-form details to affiliate networks. If you
+          follow a partner link, that merchant’s own site, cookies, and privacy
+          terms apply. The footer discloses this site-wide; guide pages that
+          show a partner card also include a short note next to the link.
+        </p>
+
         <h2>Cookies</h2>
         <p>
           We do not set advertising cookies. The site may use essential cookies
           or similar storage required to run the application or remember a
           short-lived form state. Third-party embeds are not part of the
-          current pages.
+          current pages. If you follow an affiliate or partner link, that
+          company’s site may set its own cookies.
         </p>
 
         <h2>How long we keep it</h2>
@@ -114,8 +129,8 @@ export default function PrivacyPage() {
         <h2>Changes</h2>
         <p>
           If our practices change in a material way — for example, adding
-          analytics or a new form processor — we will update this page and the
-          “last updated” date.
+          analytics, a new form processor, or new affiliate programs — we will
+          update this page and the “last updated” date.
         </p>
       </div>
     </article>
