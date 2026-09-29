@@ -9,6 +9,7 @@
  *   AFFILIATE_TEXAS_TINY_HOMES
  *   AFFILIATE_TINY_HOME_BUILDERS
  *   AFFILIATE_TINY_PROJECT
+ *   AFFILIATE_ADVANCED_HOUSE_PLANS  — falls back to the cabin-plans tracking link
  *   AFFILIATE_JAMAICA_COTTAGE_SHOP
  *   AFFILIATE_COMPO_CLOSET
  *   AFFILIATE_AMAZON_ASSOCIATES  — any non-empty value shows the Amazon line
@@ -18,6 +19,7 @@ export type AffiliateId =
   | "texasTinyHomesPlans"
   | "tinyHomeBuilders"
   | "tinyProject"
+  | "advancedHousePlans"
   | "jamaicaCottageShop"
   | "compoCloset";
 
@@ -73,6 +75,18 @@ export const affiliates = {
     href: trackingUrl("AFFILIATE_TINY_PROJECT", ""),
     blurb:
       "Construction plans and tiny house plans from The Tiny Project. Another place to look at drawings before you buy a kit or hire a builder — not a ranking, and not a kit.",
+  },
+  // Cabin house plans. Fallback tracking link is public; env overrides it.
+  advancedHousePlans: {
+    id: "advancedHousePlans",
+    name: "Cabin house plans",
+    category: "plans",
+    href: trackingUrl(
+      "AFFILIATE_ADVANCED_HOUSE_PLANS",
+      "https://www.advancedhouseplans.com/collections/cabin-plans?a=6aba9813dc4b0",
+    ),
+    blurb:
+      "Ready-to-build cabin plans from Advanced House Plans; check their current sale. Another place to look at drawings before you buy a kit or hire a builder — not a ranking, and not a kit.",
   },
   // Kit company slot. Shown as a partner to request a packing list from, never as “#1”.
   jamaicaCottageShop: {
