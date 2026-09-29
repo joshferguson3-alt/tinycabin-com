@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function TinyCabinVsTinyHomePage() {
   return (
-    <GuideArticle guide={guide}>
+    <GuideArticle guide={guide} partners={["advancedHousePlans"]}>
       <p>
         “Tiny cabin” and “tiny home” get used as if they were the same product
         with different Instagram filters. They are not. The difference that

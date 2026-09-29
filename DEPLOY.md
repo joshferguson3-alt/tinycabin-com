@@ -113,16 +113,19 @@ On Netlify: **Site configuration → Environment variables** (Production + Previ
 
 Used in `src/lib/affiliates.ts`. Leave empty until Josh pastes an approved tracking URL. Empty or `#` hides that partner card. Set on Netlify and rebuild (static pages read these at build time).
 
+`AFFILIATE_ADVANCED_HOUSE_PLANS` is the exception: if it is unset, the Cabin house plans card still renders using the cabin-plans tracking link hardcoded in `src/lib/affiliates.ts`. Set the env var only to replace that URL. `#` still hides the card.
+
 | Env var | Partner card | Example |
 | --- | --- | --- |
 | `AFFILIATE_TEXAS_TINY_HOMES` | Texas Tiny Homes plans | `https://…` tracking link |
 | `AFFILIATE_TINY_HOME_BUILDERS` | Tiny Home Builders plans | `https://…` tracking link |
 | `AFFILIATE_TINY_PROJECT` | The Tiny Project plans | `https://…` tracking link |
+| `AFFILIATE_ADVANCED_HOUSE_PLANS` | Cabin house plans (Advanced House Plans) | optional override; default is the cabin-plans link in `affiliates.ts` |
 | `AFFILIATE_JAMAICA_COTTAGE_SHOP` | Jamaica Cottage Shop | `https://…` tracking link |
 | `AFFILIATE_COMPO_CLOSET` | CompoCloset | `https://…` tracking link |
 | `AFFILIATE_AMAZON_ASSOCIATES` | Footer Amazon Associates line only | any non-empty flag, e.g. `1` |
 
-Do not invent rankings. Cards only render when the URL is configured.
+Do not invent rankings. Other cards render only when their URL is configured. The Cabin house plans card renders from the hardcoded fallback when its env var is unset.
 
 **Not env vars (edit code if needed):**
 
